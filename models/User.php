@@ -73,4 +73,22 @@ class User {
 
     }
 
+    public function verify_user(): bool {
+
+        $content = (file_exists("datas/users.json"))? file_get_contents("datas/users.json") : "";
+        $users = json_decode($content);
+        $users = (is_array($users))? $users : [];
+
+        $verif = false;
+
+        foreach($users as $user) {
+            if($user->username == $this->username) {
+                $verif = password_verify($this->password, $user->password);
+            }
+        }
+
+        return $verif;
+
+    }
+
 }

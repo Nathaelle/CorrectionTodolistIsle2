@@ -1,1 +1,12 @@
-[{"user_id":1,"username":"Test","password":"test"},{"user_id":2,"username":"Test2","password":"test"}]
+[
+    {
+        "user_id": 3,
+        "username": "Test3",
+        "password": "$2y$10$wVoVQXDX1ux3Dv6KxcdHT.7XkjSMsRHx374.MW9VB2j.MreYvRoWm"
+    },
+    {
+        "user_id": 4,
+        "username": "Test",
+        "password": "$2y$10$hNztHpdB6bqQU6NE5m0vPemofLNPa7Ld7y\/BRGkAy2uYoa8sLklbu"
+    }
+]
