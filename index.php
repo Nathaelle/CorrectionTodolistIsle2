@@ -55,9 +55,28 @@ function showHome() {
  */
 function insert_user() {
      
-    echo "je dois insérer un utilisateur";
+    var_dump($_POST);
+    //'username' => string 'Test' (length=4) => $_POST["username"]
+    //'password' => string 'test' (length=4) => $_POST["password"]
+    //'password2' => string 'test' (length=4) => $_POST["password2"]
+
+    if(!empty($_POST["username"]) && !empty($_POST["password"]) && $_POST["password"] === $_POST["password2"]) {
+        // Je peux procéder à la suite de l'ajout d'un utilisateur
+
+        require_once "models/User.php";
+
+        $user = new User($_POST["username"], $_POST["password"]);
+
+        // Résultat de l'exécution de save_user()
+        var_dump($user->save_user());
+        
+    } else {
+        // Je ne peux pas procéder à la suite de l'ajout d'un utilisateur
+
+    }
+
     // Je redirige vers une fonction d'affichage
-    header("Location:index.php?route=accueil");
+    //header("Location:index.php?route=accueil");
     exit;
 }
 
@@ -65,7 +84,6 @@ function insert_user() {
 // AFFICHAGE == Système de templates
 // Contexte global, données transmissibles via $toTemplate
 // -----------------------------------------------------------------------------------------------------
-
 ?>
 
 <!DOCTYPE html>
