@@ -84,6 +84,7 @@ class User {
         foreach($users as $user) {
             if($user->username == $this->username) {
                 $verif = password_verify($this->password, $user->password);
+                $this->user_id = $user->user_id;
             }
         }
 

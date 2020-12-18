@@ -1,5 +1,14 @@
 <h1>Bienvenue sur mon organiseur personnel !</h1>
 
+<?php if(isset($_SESSION["errors"])): ?>
+    <ul>
+        <?php foreach($_SESSION["errors"] as $error): ?>
+            <li><?= $error ?></li>
+        <?php endforeach ?>
+    </ul>
+<?php unset($_SESSION["errors"]) ?>
+<?php endif ?>
+
 <h2>Inscription</h2>
 <form action="index.php?route=insertuser" method="POST">
     <input type="text" placeholder="Entrez votre pseudo" name="username">

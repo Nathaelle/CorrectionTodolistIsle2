@@ -1,4 +1,5 @@
 <?php
+session_start(); // Crée le tableau $_SESSION (ou le charge avec les données récupérée)
 
 // Porte d'entrée dans l'application == point d'entrée des données transmises pas l'utilisateur
 // $toTemplate est la SEULE variable pour communiquer avec le contexte GLOBAL, donc le système de templates
@@ -23,6 +24,7 @@ $route = (isset($_GET["route"]))? $_GET["route"] : "accueil";
 // index.php?route=accueil => Affichage de la page d'accueil
 // index.php?route=insertuser => Ajout d'un nouvel utilisateur, redirigée vers affichage de la page d'accueil
 // index.php?route=connectuser => Connexion d'un utilisateur, redirigée vers espace membre
+// index.php?route=membre => Affichage de l'espace membre
 // -----------------------------------------------------------------------------------------------------
 
 switch($route) {
@@ -49,7 +51,7 @@ switch($route) {
  * @return array
  */
 function showHome() {
-    return ["template" => "accueil.html", "datas" => null];
+    return ["template" => "accueil.php", "datas" => null];
 }
 
 /**
@@ -71,15 +73,16 @@ function insert_user() {
         $user = new User($_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT));
 
         // Résultat de l'exécution de save_user()
-        var_dump($user->save_user());
+        $user->save_user();
         
     } else {
         // Je ne peux pas procéder à la suite de l'ajout d'un utilisateur
+        $_SESSION["errors"]["connexion"] = "Erreur lors de l'enregistrement";
 
     }
 
     // Je redirige vers une fonction d'affichage
-    //header("Location:index.php?route=accueil");
+    header("Location:index.php?route=accueil");
     exit;
 }
 
@@ -87,16 +90,29 @@ function connect_user() {
 
     require_once "models/User.php";
 
-    $user = new User($_POST["username"], $_POST["password"]);
-    if($user->verify_user()) {
-        // L'utilisateur est "autorisé" à se connecter
+    if(!empty($_POST["username"]) && !empty($_POST["password"])) {
 
+        $user = new User($_POST["username"], $_POST["password"]);
+        if($user->verify_user()) {
+            // L'utilisateur est "autorisé" à se connecter
+            $_SESSION["user"]["user_id"] = $user->getUserId();
+            $_SESSION["user"]["username"] = $user->getUsername();
 
-        
+            header("Location:index.php?route=membre");
+            exit;
+
+        } else {
+            // L'utilisateur n'est pas "autorisé" à se connecter
+            $_SESSION["errors"]["connexion"] = "Vous avez entré un mauvais identifiant et/ou mot de passe";
+        }
+
     } else {
-        // L'utilisateur n'est pas "autorisé" à se connecter
+
+        $_SESSION["errors"]["champs"] = "L'ensemble des champs est obligatoire.";
+
     }
 
+    header("Location:index.php?route=accueil");
     exit;
 }
 
