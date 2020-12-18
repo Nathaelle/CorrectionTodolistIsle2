@@ -1,6 +1,8 @@
 <?php
 session_start(); // Crée le tableau $_SESSION (ou le charge avec les données récupérée)
 
+require_once "utils/autoload.php";
+
 // Porte d'entrée dans l'application == point d'entrée des données transmises pas l'utilisateur
 // $toTemplate est la SEULE variable pour communiquer avec le contexte GLOBAL, donc le système de templates
 
@@ -67,8 +69,6 @@ function showHome(): array {
  */
 function showMember(): array {
 
-    require_once "models/Task.php";
-
     $tasks = Task::getUserTasks($_SESSION['user']['user_id']);
 
     return ["template" => "espacemembre.php", "datas" => $tasks];
@@ -88,8 +88,6 @@ function insert_user() {
     if(!empty($_POST["username"]) && !empty($_POST["password"]) && $_POST["password"] === $_POST["password2"]) {
         // Je peux procéder à la suite de l'ajout d'un utilisateur
 
-        require_once "models/User.php";
-
         $user = new User($_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT));
 
         // Résultat de l'exécution de save_user()
@@ -107,8 +105,6 @@ function insert_user() {
 }
 
 function connect_user() {
-
-    require_once "models/User.php";
 
     if(!empty($_POST["username"]) && !empty($_POST["password"])) {
 

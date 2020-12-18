@@ -84,6 +84,7 @@ class Task {
             }
         } 
 
+        // Voir doc 
         usort($userTasks, function ($a, $b) {
             if ($a->deadline == $b->deadline) {
                 return 0;
