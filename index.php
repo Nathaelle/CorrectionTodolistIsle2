@@ -25,6 +25,7 @@ $route = (isset($_GET["route"]))? $_GET["route"] : "accueil";
 // index.php?route=insertuser => Ajout d'un nouvel utilisateur, redirigée vers affichage de la page d'accueil
 // index.php?route=connectuser => Connexion d'un utilisateur, redirigée vers espace membre
 // index.php?route=membre => Affichage de l'espace membre
+// index.php?route=inserttask => Ajout d'une nouvelle tâche, redirigée vers affichage de la page espace membre
 // -----------------------------------------------------------------------------------------------------
 
 switch($route) {
@@ -34,6 +35,10 @@ switch($route) {
     case "insertuser" : insert_user(); // Redirigée vers "accueil"
     break;
     case "connectuser" : connect_user(); // Redirigée vers "mon espace"
+    break;
+    case "membre" : $toTemplate = showMember(); 
+    break;
+    case "inserttask" : insert_task(); // Redirigée vers "mon espace"
     break;
     default: $toTemplate = showHome();
 
@@ -50,8 +55,18 @@ switch($route) {
  * 'datas" => Les données à lui envoyer (éventuellement, si besoin)
  * @return array
  */
-function showHome() {
+function showHome(): array {
     return ["template" => "accueil.php", "datas" => null];
+}
+
+/**
+ * Affichage de l'espace membre
+ * "template" => Le fichier template à inclure
+ * 'datas" => Les données à lui envoyer (éventuellement, si besoin)
+ * @return array
+ */
+function showMember(): array {
+    return ["template" => "espacemembre.php", "datas" => null];
 }
 
 /**
@@ -113,6 +128,27 @@ function connect_user() {
     }
 
     header("Location:index.php?route=accueil");
+    exit;
+}
+
+
+/**
+ * Ajout d'une nouvelle tâche
+ * Redirigée vers la route "membre" (affichage espace membre)
+ */
+function insert_task() {
+
+    require_once "models/Task.php";
+    var_dump($_POST);
+    // 'description' => string 'Terminer correction' (length=19) => $_POST["description"]
+    // 'deadline' => string '2020-12-18' (length=10) => $_POST["deadline"]
+
+    var_dump($_SESSION);
+
+    $task = new Task($_POST["description"], $_POST["deadline"], $_SESSION["user"]["user_id"]);
+    $task->save_task();
+
+    //header("Location:index.php?route=membre");
     exit;
 }
 

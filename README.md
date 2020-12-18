@@ -6,3 +6,5 @@
 - (2ème Commit) : Création du Router, du système de templates, et premières fonctions de contrôle
 - (3ème Commit) : Vérifications & Enregistrement d'un utilisateur
 - (4ème Commit) : Vérifications connexion d'un utilisateur
+- (5ème Commit) : Utilisation session pour connexion est messages d'erreurs
+- (6ème Commit) : Ajout d'une nouvelle tâche

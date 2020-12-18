@@ -46,4 +46,29 @@ class Task {
         $this->user_id = $id;
     }
 
+
+    public function save_task(): bool {
+
+        // Récupère le contenu du fichier sous la forme d'une chaîne de caractères
+        $content = (file_exists("datas/tasks.json"))? file_get_contents("datas/tasks.json") : "";
+        $tasks = json_decode($content);
+        $tasks = (is_array($tasks))? $tasks : [];
+
+        // Variable de vérification du bon résultat de l'appel à la méthode (utilisateur enregistré)
+
+        $lastkey = (array_key_last($tasks) != null)? array_key_last($tasks) : 0;
+        $this->task_id = (!empty($tasks))? $tasks[$lastkey]->task_id + 1 : 1;
+
+        array_push($tasks, get_object_vars($this));
+
+        var_dump($tasks);
+
+        $handle = fopen("datas/tasks.json", "w");
+        $verif = (fwrite($handle, json_encode($tasks)))? true : false;
+        fclose($handle);
+
+        return $verif;
+
+    }
+
 }
