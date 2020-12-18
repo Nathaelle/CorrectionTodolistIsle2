@@ -71,4 +71,27 @@ class Task {
 
     }
 
+    static function getUserTasks(int $id): array {
+
+        $content = (file_exists("datas/tasks.json"))? file_get_contents("datas/tasks.json") : "";
+        $tasks = json_decode($content);
+        $tasks = (is_array($tasks))? $tasks : [];
+
+        $userTasks = []; 
+        foreach($tasks as $task) {
+            if($task->user_id == $id) {
+                array_push($userTasks, $task);
+            }
+        } 
+
+        usort($userTasks, function ($a, $b) {
+            if ($a->deadline == $b->deadline) {
+                return 0;
+            }
+            return ($a->deadline < $b->deadline) ? -1 : 1;
+        });
+
+        return $userTasks;
+    }
+
 }

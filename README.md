@@ -8,3 +8,4 @@
 - (4ème Commit) : Vérifications connexion d'un utilisateur
 - (5ème Commit) : Utilisation session pour connexion est messages d'erreurs
 - (6ème Commit) : Ajout d'une nouvelle tâche
+- (7ème Commit) : Affichage des tâches d'un utilisateur + tri par ordre chronologique

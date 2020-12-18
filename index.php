@@ -66,7 +66,12 @@ function showHome(): array {
  * @return array
  */
 function showMember(): array {
-    return ["template" => "espacemembre.php", "datas" => null];
+
+    require_once "models/Task.php";
+
+    $tasks = Task::getUserTasks($_SESSION['user']['user_id']);
+
+    return ["template" => "espacemembre.php", "datas" => $tasks];
 }
 
 /**
@@ -148,7 +153,7 @@ function insert_task() {
     $task = new Task($_POST["description"], $_POST["deadline"], $_SESSION["user"]["user_id"]);
     $task->save_task();
 
-    //header("Location:index.php?route=membre");
+    header("Location:index.php?route=membre");
     exit;
 }
 

@@ -1,8 +1,1 @@
-[
-    {
-        "task_id": 1,
-        "description": "Terminer correction",
-        "deadline": "2020-12-18",
-        "user_id": 4
-    }
-]
+[{"task_id":1,"description":"Terminer correction","deadline":"2020-12-18","user_id":4},{"task_id":2,"description":"Ajouter une nouvelle tache","deadline":"2020-12-24","user_id":4},{"task_id":3,"description":"Acheter des cadeaux","deadline":"2020-12-10","user_id":4}]
